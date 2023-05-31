@@ -21,11 +21,13 @@ const app = Vue.createApp({
         specialAttackReady() {
             return this.turn % 3 !== 0
         },
+        isFirst() {
+            return this.turn === 1
+        }
     },
     methods: {
         attackMonster() {
             this.turn ++;
-            console.log(this.turn);
             const attackValue = getRandomValue(5, 12);
             this.monsterHealth -= attackValue;
             this.attackPlayer();
@@ -36,9 +38,18 @@ const app = Vue.createApp({
         },
         specialAttackMonster() {
             this.turn ++;
-            console.log(this.turn);
             const attackValue = getRandomValue(10, 30);
             this.monsterHealth -= attackValue;
+            this.attackPlayer();
+        },
+        healPlayer() {
+            this.turn ++;
+            const healValue = getRandomValue(5, 20);
+            if (this.playerHealth + healValue > 100) {
+                this.playerHealth = 100;
+            } else {
+                this.playerHealth += healValue;
+            }
             this.attackPlayer();
         }
     }
