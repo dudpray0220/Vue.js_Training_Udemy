@@ -8,8 +8,29 @@ const app = Vue.createApp({
         return {
             playerHealth: 100,
             monsterHealth: 100,
-            turn: 1, // 특수공격은 3턴 마다 1번
+            turn: 1, // 특수공격은 3턴 마다 1번,
+            winner: null // falsy 취급
         }
+    },
+    watch: {
+      playerHealth(value) {
+          if (value <= 0 && this.monsterHealth <= 0) {
+              // Draw
+              this.winner = 'draw';
+          } else if (value <= 0) {
+              // Player Lose
+              this.winner = 'monster';
+          }
+      },
+      monsterHealth(value) {
+          if (value <= 0 && this.playerHealth <= 0) {
+              // Draw
+              this.winner = 'draw';
+          } else if (value <= 0) {
+              // Monster Lose
+              this.winner = 'player';
+          }
+      }
     },
     computed: {
         monsterBarStyles() {
