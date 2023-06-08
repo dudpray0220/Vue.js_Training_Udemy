@@ -9,7 +9,8 @@ const app = Vue.createApp({
             playerHealth: 100,
             monsterHealth: 100,
             turn: 1, // 특수공격은 3턴 마다 1번,
-            winner: null // falsy 취급
+            winner: null, // falsy 취급,
+            battleLog: []
         }
     },
     watch: {
@@ -59,21 +60,28 @@ const app = Vue.createApp({
             this.monsterHealth= 100;
             this.turn= 1; // 특수공격은 3턴 마다 1번,
             this.winner= null; // falsy 취급
+            this.battleLog = [];
         },
         attackMonster() {
             this.turn ++;
             const attackValue = getRandomValue(5, 12);
             this.monsterHealth -= attackValue;
+            this.addLogMessage('player', 'attack', attackValue);
+            // this.battleLog.push(`플레이어의 공격이 ${attackValue}데미지로 몬스터에게 적중했습니다.`)
             this.attackPlayer();
         },
         attackPlayer() {
             const attackValue = getRandomValue(8, 15);
             this.playerHealth -= attackValue;
+            // this.battleLog.push(`몬스터의 공격이 ${attackValue}데미지로 플레이어에게 적중했습니다.`)
+            this.addLogMessage('monster', 'attack', attackValue);
         },
         specialAttackMonster() {
             this.turn ++;
             const attackValue = getRandomValue(10, 30);
             this.monsterHealth -= attackValue;
+            // this.battleLog.push(`플레이어 특수 공격 발동! ${attackValue}데미지로 몬스터에게 적중했습니다.`)
+            this.addLogMessage('player', 'special-attack', attackValue);
             this.attackPlayer();
         },
         healPlayer() {
@@ -81,13 +89,25 @@ const app = Vue.createApp({
             const healValue = getRandomValue(5, 20);
             if (this.playerHealth + healValue > 100) {
                 this.playerHealth = 100;
+                // this.battleLog.push(`플레이어 자힐! ${healValue}만큼 치유합니다! 풀피가 됐습니다.`)
             } else {
                 this.playerHealth += healValue;
+                // this.battleLog.push(`플레이어 자힐! ${healValue}만큼 치유합니다! 체력을 ${this.playerHealth}로 회복합니다.`)
             }
+            this.addLogMessage('player', 'heal', healValue);
             this.attackPlayer();
         },
         surrender() {
             this.winner = 'monster';
+            this.battleLog.unshift(`플레이어 몬스터에게 굴복합니다...`)
+        },
+        // log 저장 함수
+        addLogMessage(who, what, value) {
+            this.battleLog.unshift({
+                actionBy:  who,
+                actionType: what,
+                actionValue: value
+            })
         }
     }
 });
