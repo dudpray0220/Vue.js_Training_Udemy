@@ -10,7 +10,10 @@ const app = Vue.createApp({
       this.currentUserInput = event.target.value;
     },
     setText() {
-      this.message = this.currentUserInput;
+      // this.message = this.currentUserInput;
+      this.message = this.$refs.userText.value;
+      console.log(this.$refs.userText);
+      console.dir(this.$refs.userText);
     },
   },
 });
@@ -38,9 +41,9 @@ const handler = {
     if (key === 'message') {
       target.longMessage = value + ' World!'
     }
-    console.log(target);
-    console.log(key);
-    console.log(value);
+    // console.log(target);
+    // console.log(key);
+    // console.log(value);
   }
 };
 const proxy =  new Proxy(data, handler);
