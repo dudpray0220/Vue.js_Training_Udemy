@@ -18,14 +18,8 @@
     </header>
     <section id="app">
       <ul>
-        <li v-for="friends in friends" :key="friends.id">
-          <h2>{{friends.name}}</h2>
-          <button @click="toggleShowButton">{{showButtonValue ? 'Hide Details' : 'Show Details' }}</button>
-          <ul v-if="showButtonValue">
-            <li><strong>Phone:</strong> {{friends.phone}}</li>
-            <li><strong>Email:</strong> {{friends.email}}</li>
-          </ul>
-        </li>
+        <friend-contact></friend-contact>
+        <friend-contact></friend-contact>
       </ul>
     </section>
   </body>
