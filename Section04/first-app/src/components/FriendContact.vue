@@ -22,7 +22,7 @@
 export default {
   // 최소한의 구성
   // props: [
-  //     'name',
+  //     'name
   //     'phoneNumber',
   //     'emailAddress',
   //     'isFavorite'
