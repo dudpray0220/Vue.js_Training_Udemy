@@ -15,7 +15,7 @@
 					:phone-number="friend.phone"
 					:email-address="friend.email"
 					:is-favorite="friend.isFavorite"
-					@toggle-favorite="toggleFavortieStatus"
+					@toggle-favorite="toggleFavoriteStatus"
 					@delete="deleteContact"
 				/>
 			</li>
@@ -50,7 +50,7 @@ export default {
     }
   },
   methods: {
-    toggleFavortieStatus(friendId) {
+    toggleFavoriteStatus(friendId) {
       const identifiedFriend = this.friends.find(friend => friend.id === friendId); // id가 같은 객체 찾기
       identifiedFriend.isFavorite = !identifiedFriend.isFavorite;
     },
